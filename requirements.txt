@@ -1,0 +1,4 @@
+plotly.express
+pandas
+openpyxl
+os
