@@ -13,7 +13,7 @@ import plotly.express as px
 
 # %%
 df_in=pd.read_excel('telemindex_2023_2024.xlsx')
-df_in
+#df_in
 
 # %%
 df_in.set_index('fecha')
@@ -25,7 +25,7 @@ df_in.set_index('fecha')
 año=2024 #con cambiar este valor ya sobra para filtrar la tabla
 filtro_año=df_in['año']==año
 dff =df_in[filtro_año].set_index('fecha')
-dff 
+#dff 
 
 # %% [markdown]
 # ## Agrupamos valores por días
@@ -35,22 +35,22 @@ dff
 
 # %%
 dff_20=dff.groupby(['mes','dia'])['precio_2.0'].mean().reset_index()
-dff_20
+#dff_20
 
 # %%
 dff_30=dff.groupby(['mes','dia'])['precio_3.0'].mean().reset_index()
-dff_30
+#dff_30
 
 # %%
 dff_61=dff.groupby(['mes','dia'])['precio_6.1'].mean().reset_index()
-dff_61
+#dff_61
 
 # %% [markdown]
 # ## Unimos las tres tablas
 
 # %%
 dff_dia = pd.concat([dff_20,dff_30,dff_61], axis=1)
-dff_dia
+#dff_dia
 
 
 # %% [markdown]
@@ -61,7 +61,7 @@ dff_dia
 
 # %%
 dff_dia=dff_dia.loc[:, ~dff_dia.T.duplicated()]
-dff_dia
+#dff_dia
 
 # %% [markdown]
 # ## Graficamos los precios diarios por mes
@@ -74,13 +74,13 @@ graf=px.line(dff_dia, x='dia', y=['precio_2.0', 'precio_3.0', 'precio_6.1'], fac
     
     
     )
-graf
+#graf
 
 # %% [markdown]
 # ## Creamos tabla dinámica para desagregar por horas
 
 # %%
-dff
+#dff
 
 # %%
 dff.columns
@@ -92,7 +92,7 @@ pt1=dff.pivot_table(
     aggfunc='mean'
 )
 pt1=pt1.reset_index()
-pt1
+#pt1
 
 # %%
 colores_precios = {'precio_2.0': 'goldenrod', 'precio_3.0': 'darkred', 'precio_6.1': 'blue'}
@@ -105,7 +105,7 @@ graf_pt1=px.line(pt1,x='hora',y=['precio_2.0','precio_3.0','precio_6.1'],
     color_discrete_map=colores_precios,
 )
 
-graf_pt1
+#graf_pt1
 
 # %%
 graf_pt1=graf_pt1.add_bar(y=pt1['spot'], name='spot', marker_color='green', width=0.5)
@@ -113,7 +113,7 @@ graf_pt1.update_layout(
     
     title_font_size=24,
     )
-graf_pt1
+#graf_pt1
 
 # %%
 
