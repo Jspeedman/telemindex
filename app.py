@@ -4,7 +4,7 @@ import plotly.express as px
 #from telemindex import graf_pt1
 
 df_in=pd.read_excel('telemindex_2023_2024.xlsx')
-df_in.set_index('fecha')
+df_in.set_index('fecha', inplace=True)
 
 año=2024 #con cambiar este valor ya sobra para filtrar la tabla
 filtro_año=df_in['año']==año
@@ -22,11 +22,10 @@ pt1=dff.pivot_table(
     aggfunc='mean'
 )
 pt1=pt1.reset_index()
-pt1
 
 colores_precios = {'precio_2.0': 'goldenrod', 'precio_3.0': 'darkred', 'precio_6.1': 'blue'}
 graf_pt1=px.line(pt1,x='hora',y=['precio_2.0','precio_3.0','precio_6.1'],
-    height=1000,
+    height=600,
     title="Telemindex 2024: Precios medios horarios de indexado según tarifas de acceso",
     labels={'value':'€/MWh','variable':'Precios s/ ATR'},
     color_discrete_map=colores_precios,
@@ -38,7 +37,7 @@ graf_pt1.update_layout(
 
 st.set_page_config(layout='wide')
 st.title("Telemindex webapp")
-event=st.plotly_chart(graf_pt1,use_container_width=True)
+st.plotly_chart(graf_pt1,use_container_width=True)
 
 
 
