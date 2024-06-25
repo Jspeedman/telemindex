@@ -22,6 +22,7 @@ pt1=dff.pivot_table(
     aggfunc='mean'
 )
 pt1=pt1.reset_index()
+pt1
 
 colores_precios = {'precio_2.0': 'goldenrod', 'precio_3.0': 'darkred', 'precio_6.1': 'blue'}
 graf_pt1=px.line(pt1,x='hora',y=['precio_2.0','precio_3.0','precio_6.1'],
