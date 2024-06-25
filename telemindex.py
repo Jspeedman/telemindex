@@ -83,7 +83,7 @@ graf=px.line(dff_dia, x='dia', y=['precio_2.0', 'precio_3.0', 'precio_6.1'], fac
 #dff
 
 # %%
-dff.columns
+#dff.columns
 
 # %%
 pt1=dff.pivot_table(
