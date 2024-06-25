@@ -104,7 +104,7 @@ graf_pt1=px.line(pt1,x='hora',y=['precio_2.0','precio_3.0','precio_6.1'],
     labels={'value':'€/MWh','variable':'Precios s/ ATR'},
     color_discrete_map=colores_precios,
 )
-
+graf_pt1.update_traces(line=dict(width=4))
 graf_pt1
 
 # %%
