@@ -35,6 +35,7 @@ st.sidebar.write("st.session_state object:", st.session_state)
 ## Datos de la página principal
 st.title("Telemindex 2024 webapp")
 st.text("Tu aplicación para saber los precios minoristas de indexado")
+st.text("Copyright by Jose Vidal")
 
 pt1_trans2=pt1_trans()
 graf_pt2=graf_pt1()
