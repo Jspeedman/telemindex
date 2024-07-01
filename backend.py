@@ -35,6 +35,7 @@ dffa
 #usado como texto adicional en el gráfico si rango = todo el año
 max_reg=dffa.index.max().strftime('%d-%m-%Y')
 max_reg
+texto_graf=f'Último día registrado: {max_reg}'
 
 
 # %% [markdown]
@@ -67,11 +68,8 @@ lista_meses
 # %% [markdown]
 # ## Telemindex horario para streamlit
 
-# %%
-dffa
-
 # %% [markdown]
-# ### Tabla dinámica
+# ### Inicializamos dffm, que es el la tabla filtrada por el usuario
 
 # %%
 dffm=dffa
@@ -79,10 +77,6 @@ dffm
 
 # %% [markdown]
 # ## Filtramos el mes seleccionado por el usuario
-
-# %%
-texto_graf=f'Último día registrado: {max_reg}'
-
 
 # %%
 def filtrar_mes(mes_seleccionado=None):
@@ -116,6 +110,9 @@ def pt1():
     ).reset_index()
     
     return pt1
+
+# %%
+pt1()
 
 # %% [markdown]
 # ### Transponemos para visualizar en stremalit
@@ -163,5 +160,40 @@ def graf_pt1():
     graf_pt1=graf_pt1.add_bar(y=pt2['spot'], name='spot', marker_color='green', width=0.5)
     
     return graf_pt1
+
+# %% [markdown]
+# ## Obtención de la tabla resumen de precios
+
+# %%
+#dffm=filtrar_mes(globals.mes_seleccionado)
+def pt5_trans():
+        dffm=filtrar_mes(globals.mes_seleccionado)    
+        pt3=dffm.pivot_table(
+                values=['precio_2.0'],
+                aggfunc='mean',
+                index='dh_3p'
+                )
+        pt4=dffm.pivot_table(
+                values=['precio_3.0','precio_6.1'],
+                aggfunc='mean',
+                index='dh_6p',
+                )
+        pt5=pd.concat([pt3,pt4],axis=1)
+        
+        
+        media_20=dffm['precio_2.0'].mean()
+        media_30=dffm['precio_3.0'].mean()
+        media_61=dffm['precio_6.1'].mean()
+        precios_medios=[media_20,media_30,media_61]
+        pt5_trans=pt5.transpose()
+        pt5_trans['Media']=precios_medios
+        pt5_trans=pt5_trans.div(10)
+        pt5_trans=pt5_trans.round(1)
+        pt5_trans=pt5_trans.fillna('')
+
+        return pt5_trans
+
+        
+
 
 
