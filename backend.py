@@ -69,32 +69,53 @@ lista_meses
 # ## Telemindex horario para streamlit
 
 # %% [markdown]
-# ### Inicializamos dffm, que es el la tabla filtrada por el usuario
+# ### Inicializamos dffm y margen, que es la tabla filtrada por el usuario
 
 # %%
-dffm=dffa
-dffm
+dffa_copia=dffa.copy()
+#margen_aplicado=10
+#dffm
 
 # %% [markdown]
 # ## Filtramos el mes seleccionado por el usuario
 
 # %%
 def filtrar_mes(mes_seleccionado=None):
-        #dffm=dffa
-        mes=mes_seleccionado
-        if mes is None: 
-                dffm=dffa
+        #dffm=dffa.copy()
+        #mes=mes_seleccionado
+        if mes_seleccionado is None: 
+                dffm=dffa_copia
                 #texto_graf = f'Último día registrado: {max_reg}'
+                #return dffa
         else:
-                mes_filtro=dffa['mes_nombre']==mes
-                dffm=dffa[mes_filtro]
+                mes_filtro=dffa_copia['mes_nombre']==mes_seleccionado
+                dffm=dffa_copia[mes_filtro]
                 #texto_graf=f'{mes}'
-        return dffm #,texto_graf
-        
+                #return dffa[mes_filtro] #dffm #,texto_graf
+                
+        return dffm
 
 
 # %%
-dffm
+def aplicar_margen(mes_seleccionado,margen_aplicado):
+    #dffa_copia=dffa
+    dffa_copia['precio_2.0']=dffa['precio_2.0'] #+=margen_aplicado #=dffm['precio_2.0']+margen
+    dffa_copia['precio_3.0']=dffa['precio_3.0'] #+=margen_aplicado #dffm['precio_3.0']+margen
+    dffa_copia['precio_6.1']=dffa['precio_6.1'] #+=margen_aplicado #dffm['precio_6.1']+margen
+    dffa_copia['precio_2.0']+=margen_aplicado #=dffm['precio_2.0']+margen
+    dffa_copia['precio_3.0']+=margen_aplicado #dffm['precio_3.0']+margen
+    dffa_copia['precio_6.1']+=margen_aplicado #dffm['precio_6.1']+margen
+    
+    filtrar_mes(mes_seleccionado)
+
+    return dffa_copia
+
+
+# %% [markdown]
+# dffm['precio_2.0']=dffm['precio_2.0']+margen
+# dffm['precio_3.0']=dffm['precio_3.0']+margen
+# dffm['precio_6.1']=dffm['precio_6.1']+margen
+# dffm
 
 # %% [markdown]
 # ### De esta tabla sale el gráfico
@@ -194,6 +215,12 @@ def pt5_trans():
         return pt5_trans
 
         
+
+
+# %%
+pt5_trans()
+
+# %%
 
 
 
